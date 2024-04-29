@@ -8,23 +8,40 @@ use Chuva\Php\WebScrapping\Entity\Person;
 /**
  * Does the scrapping of a webpage.
  */
-class Scrapper {
+
+
+ 
+class Scrapper
+{
+  
+
+private function getElementsByClassName($dom, $ClassName, $tagName=null) {
+    if($tagName){
+        $Elements = $dom->getElementsByTagName($tagName);
+    }else {
+        $Elements = $dom->getElementsByTagName("*");
+    }
+    $Matched = array();
+    for($i=0;$i<$Elements->length;$i++) {
+        if($Elements->item($i)->attributes->getNamedItem('class')){
+            if($Elements->item($i)->attributes->getNamedItem('class')->nodeValue == $ClassName) {
+                $Matched[]=$Elements->item($i);
+            }
+        }
+    }
+    return $Matched;
+}
 
   /**
    * Loads paper information from the HTML and returns the array with the data.
    */
-  public function scrap(\DOMDocument $dom): array {
-    return [
-      new Paper(
-        123,
-        'The Nobel Prize in Physiology or Medicine 2023',
-        'Nobel Prize',
-        [
-          new Person('Katalin Karikó', 'Szeged University'),
-          new Person('Drew Weissman', 'University of Pennsylvania'),
-        ]
-      ),
-    ];
+  public function scrap(\DOMDocument $dom): array
+  {
+      $papers = [];
+      $rows = $this->getElementsByClassName($dom, 'row', 'div');
+
+     
+
   }
 
 }
