@@ -23,7 +23,6 @@ class Scrapper
     $papers = [];
     $authorsByPostId = [];
 
-
     $titleElements = $xPATH->query('//*[@class="my-xs paper-title"]');
     $authorsElements = $xPATH->query('//*[@class="authors"]');
     $idElements = $xPATH->query(('//*[@class="volume-info"]'));
@@ -39,14 +38,14 @@ class Scrapper
         $authorsByPostId[$postId] = [];
     }
 
-
       foreach ($authorsElements->item($i)->getElementsByTagName('span') as $authorsSpan) {
         $authorInstitution = '';
         if ($authorsSpan->hasAttribute('title')) {
           $authorInstitution = $authorsSpan->getAttribute('title');
         }
 
-        $authorName = trim($authorsSpan->textContent);
+        //Alterando a formatação, substituindo locais onde tem mais de um espaço, por apenas um
+        $authorName = preg_replace('/\s+/', ' ', $authorsSpan->textContent);
 
         $author = new Person($authorName, $authorInstitution, $postId);
 
@@ -56,18 +55,12 @@ class Scrapper
 
         // Adiciona o autor correspondente a chave do array associativo, usando postId como chave
         $authorsByPostId[$postId][] = $author;
-
       }
 
       $papers[] = new Paper($postId, $title, $type, $authorsByPostId[$postId]);
-
     }
     return array_filter($papers);
   }
-
-
-
-
 }
 
 
