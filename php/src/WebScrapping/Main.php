@@ -16,9 +16,9 @@ class Main {
     $dom->loadHTML($html);
 
     $data = (new Scrapper())->scrap($dom);
+    $spreadsheet = new Spreadsheet();
 
     // Write your logic to save the output file bellow.
-    print_r($data);
+     $spreadsheet->createSpreadsheet($data);
   }
-
 }
