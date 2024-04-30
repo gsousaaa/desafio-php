@@ -17,12 +17,21 @@ class Person {
    */
   public string $institution;
 
+    /**
+   * Person postId.
+   */
+
+   public $postId;
+
   /**
    * Builder.
    */
-  public function __construct($name, $institution) {
+
+   
+  public function __construct($name, $institution, $postId) {
     $this->name = $name;
     $this->institution = $institution;
+    $this->postId = $postId;
   }
 
 }
