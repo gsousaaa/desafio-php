@@ -33,7 +33,7 @@ class Scrapper
       $title = $titleElements->item($i)->textContent;
       $type = $postTypeElements->item($i)->textContent;
 
-      //verifica se o PostId já existe no array, se não, cria um novo array vazio
+      //verifica se a chave postId já existe no array, se não, cria um novo array vazio. Nele, estarão os autores com o postId correspondente.
       if (!isset($authorsByPostId[$postId])) {
         $authorsByPostId[$postId] = [];
     }
